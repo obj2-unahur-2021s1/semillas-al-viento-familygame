@@ -18,8 +18,6 @@ class Parcela(val ancho: Int, val largo: Int, val horasSolPorDia: Int) {
   /**
   * Robustez: Se pide que el metodo arroje un error, no un comentario. Puede causar inconsistencias.
   */
-
-
   fun plantar(planta: Planta) {
     if (cantidadPlantas == this.cantidadMaximaPlantas()) {
       println("Ya no hay lugar en esta parcela")
@@ -49,6 +47,7 @@ class Agricultora(val parcelas: MutableList<Parcela>) {
         planta -> planta.daSemillas()
       }
     }
+
   /**
   * Abstraccion-Rehusabilidad: Debería utilizar el metodo plantar que ya existe en la clase parcela y no acceder
   * directamente a la lista.
