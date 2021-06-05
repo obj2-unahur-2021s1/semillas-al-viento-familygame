@@ -28,7 +28,10 @@ class Parcela(val ancho: Int, val largo: Int, val horasSolPorDia: Int) {
       cantidadPlantas += 1
     }
   }
+  fun parcelaTieneComplicaciones(parcela: Parcela) =
+    parcela.plantas.any { it.horasDeSolQueTolera() < parcela.horasSolPorDia }
 }
+
 
 class Agricultora(val parcelas: MutableList<Parcela>) {
   var ahorrosEnPesos = 20000
