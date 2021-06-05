@@ -8,7 +8,11 @@ class AgricultoraTest : DescribeSpec ({
     describe("Una agricultora"){
 
         val parcela = Parcela(10, 8, 5)
-        val plantaDeSoja = Soja(2018, 1F, false)
+        /**
+         * Debemos modificar este objeto ya que se creó la clase SojaTransgenica y
+         * la clase soja ya no recibe el parametro "esTransgenica"
+         */
+        val plantaDeSoja = Soja(2018, 1F)
         val agricultora = Agricultora(parcelas = mutableListOf())
 
         it("Puede comprar parcela"){
