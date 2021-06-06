@@ -15,11 +15,15 @@ class ParcelaTest : DescribeSpec({
         it("Cantidad maxima de plantas"){
             parcela.cantidadMaximaPlantas().shouldBe(230)
         }
+
         it("Permite plantar"){
+            /**
+             * se corrigio test por eliminacion de variable cantidad de plantas
+             */
             val unaPlanta = Menta(2011, 0.7F)
-            parcela.cantidadPlantas.shouldBe(0)
+            parcela.plantas.size.shouldBe(0)
             parcela.plantar(unaPlanta)
-            parcela.cantidadPlantas.shouldBe(1)
+            parcela.plantas.size.shouldBe(1)
         }
 
     }

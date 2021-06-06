@@ -13,22 +13,27 @@ class AgricultoraTest : DescribeSpec ({
          * la clase soja ya no recibe el parametro "esTransgenica"
          */
         val plantaDeSoja = Soja(2018, 1F)
-        val agricultora = Agricultora(parcelas = mutableListOf())
+        val plantaDeSoja2 = Soja(2019, 1F)
+        parcela.plantar(plantaDeSoja2)
+        val parcelas: List<Parcela> = listOf(parcela)
+        val agricultora = Agricultora(parcelas)
 
-        it("Puede comprar parcela"){
-            agricultora.comprarParcela(parcela)
-            agricultora.ahorrosEnPesos.shouldBe(15000)
+        /**
+         * Se elimino test ya que una parcela no puede ser comprada ni vendida
+         */
+        /**
+         * Se corrigio test ya que una parcela no puede ser comprada ni vendida
+         */
+        it("Puede plantar estrategicamente"){
+            agricultora.parcelas[0].plantas.size.shouldBe(1)
+            agricultora.plantarEstrategicamente(plantaDeSoja)
+            agricultora.parcelas[0].plantas.size.shouldBe(2)
         }
 
         it("Tiene una parcela semillera"){
             agricultora.parcelasSemilleras().shouldBeEmpty()
         }
 
-        it("Puede plantar estrategicamente"){
-            agricultora.comprarParcela(parcela)
-            agricultora.plantarEstrategicamente(plantaDeSoja)
-            agricultora.parcelas[0].cantidadPlantas.shouldBe(0)
-            agricultora.parcelas[0].plantas.size.shouldBe(1)
-        }
+
     }
 })
