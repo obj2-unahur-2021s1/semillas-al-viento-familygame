@@ -1,13 +1,17 @@
 package ar.edu.unahur.obj2.semillasAlViento
 
-abstract class Planta(val anioObtencionSemilla: Int, var altura: Float) {
+abstract class Planta(val anioObtencionSemilla: Int, val altura: Float) {
+
   fun esFuerte() = this.horasDeSolQueTolera() > 10
-
-  fun parcelaTieneComplicaciones(parcela: Parcela) =
-    parcela.plantas.any { it.horasDeSolQueTolera() < parcela.horasSolPorDia }
-
   abstract fun horasDeSolQueTolera(): Int
   abstract fun daSemillas(): Boolean
+  fun calcularHorasBase(altura: Float): Int{
+    return when {
+      altura < 0.5  -> 6
+      altura < 1    -> 7
+      else          -> 9
+    }
+ }
 }
 
 class Menta(anioObtencionSemilla: Int, altura: Float) : Planta(anioObtencionSemilla, altura) {
@@ -15,25 +19,16 @@ class Menta(anioObtencionSemilla: Int, altura: Float) : Planta(anioObtencionSemi
   override fun daSemillas() = this.esFuerte() || altura > 0.4
 }
 
-class Soja(anioObtencionSemilla: Int, altura: Float, val esTransgenica: Boolean) : Planta(anioObtencionSemilla, altura) {
+open class Soja(anioObtencionSemilla: Int, altura: Float) : Planta(anioObtencionSemilla, altura) {
   override fun horasDeSolQueTolera(): Int  {
-    // ¡Magia de Kotlin! El `when` es como un `if` pero más poderoso:
-    // evalúa cada línea en orden y devuelve lo que está después de la flecha.
-    val horasBase = when {
-      altura < 0.5  -> 6
-      altura < 1    -> 7
-      else          -> 9
-    }
-
-    return if (esTransgenica) horasBase * 2 else horasBase
+    return calcularHorasBase(altura)
   }
+  override fun daSemillas() = this.esFuerte() || (this.anioObtencionSemilla > 2007 && this.altura > 1)
 
+}
+class SojaTransgenica(anioObtencionSemilla: Int, altura: Float) : Soja(anioObtencionSemilla, altura){
 
-  override fun daSemillas(): Boolean  {
-    if (this.esTransgenica) {
-      return false
-    }
+  override fun daSemillas() = false
 
-    return this.esFuerte() || (this.anioObtencionSemilla > 2007 && this.altura > 1)
-  }
+  override fun horasDeSolQueTolera() = super.horasDeSolQueTolera() * 2
 }
